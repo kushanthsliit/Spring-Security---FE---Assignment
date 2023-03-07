@@ -1,0 +1,92 @@
+<h1>{{welcomeMsg}}</h1>
+
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+             class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" [hidden]="dataService.isLoggedIn" *ngIf="!isForgetPasswordLinkClicked else userEmailEnterForm">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" [hidden]="isForgetPasswordLinkClicked">
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <input type="email" id="form3Example3" class="form-control form-control-lg"
+                   placeholder="Enter a valid email address" formControlName="username"/>
+            <label class="form-label" for="form3Example3">Email User Name</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <input type="password" id="form3Example4" class="form-control form-control-lg"
+                   placeholder="Enter password" formControlName="password" />
+            <label class="form-label" for="form3Example4">Password</label>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center" [hidden]="isForgetPasswordLinkClicked">
+            <!-- Checkbox -->
+            <div class="form-check mb-0">
+
+            </div>
+            <a href="#!" class="text-body" (click)="forgetPasswordClicked()">Forgot password?</a>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                    [disabled]="!loginForm.valid">Login</button>
+            </div>
+
+<!--          {{loginForm.value | json}}-->
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #userEmailEnterForm >
+  <form [formGroup]="userEmailForm" (ngSubmit)="sentOtp()">
+    <!-- Email input -->
+    <div class="form-outline mb-4" [hidden]="isEmailSent">
+      <input type="email" id="username" class="form-control form-control-lg"
+             placeholder="Enter a valid email address" formControlName="email" [(ngModel)] = "this.userEmail"/>
+      <label class="form-label" for="form3Example3">Enter Email Address</label>
+    </div>
+
+    <!-- Email input -->
+    <div class="form-outline mb-4" *ngIf="isEmailSent" [hidden]="isOtpVerified">
+      <input type="text" id="otp" class="form-control form-control-lg"
+             placeholder="Enter a valid OTP" formControlName="otp" [(ngModel)] = "this.otp"/>
+      <label class="form-label" for="form3Example3">Enter OTP</label>
+    </div>
+
+    <!-- Otp input -->
+    <div class="form-outline mb-4" *ngIf="isOtpVerified">
+      <input type="password" id="newPassword" class="form-control form-control-lg"
+             placeholder="Enter a valid Password" formControlName="otp" [(ngModel)] = "this.newPassword"/>
+      <label class="form-label" for="form3Example3">Enter New Password</label>
+    </div>
+
+    <div class="text-center text-lg-start mt-4 pt-2" [hidden]="isEmailSent">
+      <button type="submit" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;"
+              [disabled]="!userEmailForm.valid">Submit</button>
+    </div>
+
+    <div class="text-center text-lg-start mt-4 pt-2" *ngIf="isEmailSent" [hidden]="isOtpVerified">
+      <button type="button" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="verifyOtp()">Verify OTP</button>
+    </div>
+
+    <div class="text-center text-lg-start mt-4 pt-2" *ngIf="isOtpVerified">
+      <button type="button" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="resetPassword()">Reset Password</button>
+    </div>
+
+<!--    {{userEmailForm.value | json}}-->
+<!--    {{userEmail | json}}-->
+<!--    {{otp | json}}-->
+<!--    {{newPassword | json}}-->
+  </form>
+</ng-template>
