@@ -10,6 +10,7 @@ import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import {SharedService} from './services/shared.service';
 import {UserService} from './services/user.service';
+import {AdminService} from './services/admin.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import {UserService} from './services/user.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthServiceService, SharedService, UserService],
+  providers: [AuthServiceService, SharedService, UserService, AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
